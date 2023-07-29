@@ -1,0 +1,93 @@
+<head>
+ <link rel="stylesheet" href="style.css" type="text/css" media="screen">
+<style>
+.mySlides {display:none;}
+input[type="text"], input[type="email"],select[name="sparepart"]
+{
+    border: none;
+    background:#ff854d;
+    height: 50px;
+    font-size: 16px;
+	margin-left:2%;
+	padding:15px;	
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <a href="#default" class="logo"><img class="logo" src="STEER&DRIVE22.png"></a>
+  <div class="header-right">
+    <a class="active" href="index.jsp">Home</a>
+    <a href="adminLogin.jsp">Admin Login</a>
+  </div>
+</div>
+<div class="content">
+   <p>We make sure you have the best quality spare parts for your car!!</p>
+<div>
+
+<div style="max-width:90%">
+  <img class="mySlides"  src="orangecarr.jpg" >
+</div>
+
+<body>
+   <br>
+   <%
+   String msg=request.getParameter("msg");
+   if("valid".equals(msg))
+   {
+	   %>
+	   <center><font color="black" size="5">Order placed successfully.You will get notify within 24 hours.</font></center>
+	   <% 
+   }
+   %>
+   <%
+   
+   if("invalid".equals(msg))
+   {
+	   %>
+	   <center><font color="red" size="5">Invalid data!!Try again</font></center>
+	   <% 
+   }
+   %>
+   <Center><h1>Customers Parts Request</h1></Center>
+   <Center><font color="orange" size="5"><h2>Enter your details to request the spare parts</h2></Center>
+   <form action="indexFormActionPage.jsp" method="post">
+   <center>
+   <input type="text" name="name" placeholder="Enter name" required>
+   <input type="text" name="mobileNumber" placeholder="Enter mobileNumber" required>
+   <input type="email" name="email" placeholder="Enter mail Address" required>
+  <select name="sparepart" placeholder="select sparepart" required>
+      <option value="">Select spare part</option>
+     
+     
+     <option value="Air filter">Air filter - Rs.5000</option>
+    <option value="Brake pads">Brake pads - Rs.2000</option>
+    <option value="seat">Seat - Rs.1000</option>
+    <option value="tyre">Tyre - Rs.600</option>
+    <option value="windows">Windows - Rs.500</option>
+     
+     
+      
+    </select>
+   <button class="button1"><span>Order Now</span></button>
+    
+   
+   </center>
+   </form>
+  <br>
+  <br>
+  </div>
+</div>
+
+<div class="row1"> 
+<div class="container"> 
+<br>         
+<br>
+    </tbody>
+  </table>
+</div>
+</div>
+<h3><center>All Right Reserved @ STEER&DRIVE:: 2023  </center></h3>
+</body>
+</html>

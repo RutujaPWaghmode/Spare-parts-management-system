@@ -1,0 +1,79 @@
+
+<%@ page import="Project1.ConnectionProvider" %>
+<%@page import="java.sql.*" %>
+<%@page import="java.sql.DriverManager"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="java.sql.Connection"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<%
+String msg=request.getParameter("msg");
+if("valid".equals(msg))
+{
+%>
+<center><font color="red" size="5">Successfully updated</font></center>
+<%} %>
+<%
+
+if("invalid".equals(msg))
+{
+%>
+<center><font color="red" size="5">Some thing went wrong!!Try again</font></center>
+<%} %>
+<%
+int supplierID=1;
+try
+{
+	Connection con=ConnectionProvider.getCon();
+	Statement st=con.createStatement();
+	ResultSet rs=st.executeQuery("select max(supplierID) from supplier");
+	if(rs.first())
+	{
+		supplierID=rs.getInt(1);
+		supplierID=supplierID+1;
+	}%>
+	<div class="container">
+	<h1 style="color:red;"> supplier ID: <%out.println(supplierID); %></h1>
+	<% 
+}catch(Exception e)
+{}
+%>
+<div class="container">
+<form action="addNewsupplierAction.jsp" method="post">
+<input type="hidden" name="supplierID" value="<%out.println(supplierID);%>">
+<center><h1>Fill supplier Details</h1>
+<h2>Supplier Name</h2>
+<input type="text" placeholder="Enter name" name="supplierName" required>
+<hr>
+
+<h2>Supplier Location</h2>
+<input type="text" placeholder="Enter Supplier Location" name="supplierLocation" required>
+<hr>
+
+<h2>Supplier Contact</h2>
+<input type="number" placeholder="Enter Supplier Contact" name="supplierContact" required>
+<hr>
+
+<h2>Supplier part</h2>
+<select name="supplierPart">
+<option value="brake">brake</option>
+<option value="mirror">mirror</option>
+<option value="tyre">tyre</option>
+<option value="glass">glass</option>
+<option value="seat">seat</option>
+</select>
+</center>
+<hr>
+<br>
+<center><button type="submit" class="button">Save</button></center>
+
+</form>
+</div>
+</body>
+</html>

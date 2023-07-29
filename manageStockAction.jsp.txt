@@ -1,0 +1,42 @@
+<%@page import ="Project1.ConnectionProvider" %>
+<%@page import ="java.sql.*" %>
+<%
+String parts=request.getParameter("parts");
+String incdec=request.getParameter("incdec");
+
+int quantity=Integer.parseInt(request.getParameter("quantity"));
+out.println(quantity);
+int price=Integer.parseInt(request.getParameter("price"));
+
+try
+{
+    Connection con=ConnectionProvider.getCon();
+    Statement st=con.createStatement();
+    
+    if(incdec.equals("inc")) {
+        st.executeUpdate("update stock set quantity=quantity+'"+quantity+"', price='"+price+"' where parts='"+parts+"'");
+    } else {
+        st.executeUpdate("update stock set quantity=quantity-'"+quantity+"', price='"+price+"' where parts='"+parts+"'");
+    }
+    
+    int updatedQuantity = 0;
+    int updatedPrice = 0;
+    int totalPrice = 0;
+    
+    ResultSet rs = st.executeQuery("select quantity, price from stock where parts='"+parts+"'");
+    if(rs.next()) {
+        updatedQuantity = rs.getInt("quantity");
+        updatedPrice = rs.getInt("price");
+    }
+    
+    totalPrice = updatedQuantity * updatedPrice;
+    
+    st.executeUpdate("update stock set totalPrice='"+totalPrice+"' where parts='"+parts+"'");
+    
+    response.sendRedirect("manageStock.jsp?msg.valid");
+}
+catch(Exception e)
+{
+    response.sendRedirect("manageStock.jsp?msg.invalid");
+}
+%>

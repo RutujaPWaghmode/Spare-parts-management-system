@@ -1,0 +1,16 @@
+requestForPartsDelete:<%@page import ="Project1.ConnectionProvider" %>
+<%@page import ="java.sql.*" %>
+<%
+String mobileNumber=request.getParameter("mobileNumber");
+try
+{
+Connection con=ConnectionProvider.getCon();
+Statement st=con.createStatement();
+st.executeUpdate("delete from sparepartrequest where mobileNumber='"+mobileNumber+"'");
+response.sendRedirect("requestForParts.jsp");
+}
+catch(Exception e)
+{
+ response.sendRedirect("requestForParts.jsp");
+}
+%>

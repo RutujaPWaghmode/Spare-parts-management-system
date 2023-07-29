@@ -1,0 +1,29 @@
+<%@ page import="Project1.ConnectionProvider" %>
+<%@page import="java.sql.*" %>
+<%
+int s=Integer.parseInt(request.getParameter("supplierID")); 
+
+String  supplierName=request.getParameter("supplierName");
+String 
+supplierLocation=request.getParameter("supplierLocation");
+String 
+supplierContact=request.getParameter("supplierContact");
+String supplierPart=request.getParameter("supplierPart");
+try{
+ Connection con=ConnectionProvider.getCon();
+ PreparedStatement ps=con.prepareStatement("update supplier set supplierName=?,supplierLocation=?,supplierContact=?,supplierPart=? where supplierID=?");
+
+
+
+ ps.setString(1,supplierName);
+ ps.setString(2,supplierLocation);
+ ps.setString(3,supplierContact);
+ ps.setString(4,supplierPart);
+ ps.setInt(5,s);
+ ps.executeUpdate();
+ response.sendRedirect("editDelete.jsp?msg=valid");
+}
+catch(Exception e){
+ out.print(e);
+}
+%>

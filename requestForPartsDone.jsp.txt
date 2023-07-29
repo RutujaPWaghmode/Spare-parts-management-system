@@ -1,0 +1,17 @@
+requestForPartsDone:<%@page import ="Project1.ConnectionProvider" %>
+<%@page import ="java.sql.*" %>
+<%
+String mobileNumber=request.getParameter("mobileNumber");
+try
+{
+Connection con=ConnectionProvider.getCon();
+PreparedStatement ps=con.prepareStatement("update sparepartrequest set status='completed' where mobileNumber=?");
+ps.setString(1,mobileNumber);
+ps.executeUpdate();
+response.sendRedirect("requestForParts.jsp");
+}
+catch(Exception e)
+{
+ response.sendRedirect("requestForParts.jsp");
+}
+%>

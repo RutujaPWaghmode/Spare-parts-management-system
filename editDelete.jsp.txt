@@ -1,0 +1,137 @@
+
+<%@ page import="Project1.ConnectionProvider" %>
+<%@page import="java.sql.*" %>
+<%@include file="header.html"%>
+<html>
+<head>
+
+
+
+<style>
+#customers {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 95%;
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #AF69EE;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #6F2DA8;
+  color: white;
+}
+
+table[name="supplier"] {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 95%;
+}
+
+table[name="supplier"] th,table[name="supplier"] td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+table[name="supplier"] tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+table[name="supplier"] tr:hover {
+  background-color: #AF69EE;
+}
+
+table[name="supplier"] th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #6F2DA8;
+  color: white;
+}
+
+</style>
+</head>
+<body>
+<br>
+<%
+//out.println(request.getParameter("msg"));
+ String msg=request.getParameter("msg");
+
+if("valid".equals(msg))
+{%>
+<center><font color="red" size="5">Successfully updated</font></center>
+<%
+}
+%>
+<%
+ 
+if("invalid".equals(msg))
+{%>
+<center><font color="red" size="5">Something went wrong</font></center>
+<%
+}
+%>
+<%
+ 
+if("deleted".equals(msg))
+{%>
+<center><font color="red" size="5">Successfully deleted</font></center>
+<%
+}
+%>
+<center><h1>Suppliers Information</h1></center>
+<center>
+  <table name="supplier">
+  <tr>
+  <th>supplierID</th>
+  <th>supplierName</th>
+  <th>supplierLocation</th>
+  <th>supplierContact</th>
+  <th>supplierPart</th>
+  <th>Edit</th>
+  <th>delete</th>
+  </tr>
+  <tr>
+<% 
+   try
+   {
+	 Connection con=ConnectionProvider.getCon();
+	 Statement st=con.createStatement();
+	 ResultSet rs=st.executeQuery("select * from supplier");
+	 while(rs.next()){
+%>
+<td><%=rs.getInt(1)%></td>
+<td><%=rs.getString(2)%></td>
+<td><%=rs.getString(3)%></td>
+<td><%=rs.getString(4)%></td>
+<td><%=rs.getString(5)%></td>
+<td><a href="UpdateSupplier.jsp?supplierID=<%=rs.getString(1)%>">Edit</a></td>
+<td><a href="deleteSupplier.jsp?supplierID=<%=rs.getString(1)%>">Delete</a></td>
+
+</tr>
+<%
+	 }
+	 }
+catch(Exception e)
+{
+	System.out.println(e);
+}
+%>
+</table>
+</center>
+<br>
+<br>
+<br>
+<br>
+<h3><center>All Right Reserved @ STEER&DRIVE Days :: 2023  </center></h3>
+</body>
+</html>

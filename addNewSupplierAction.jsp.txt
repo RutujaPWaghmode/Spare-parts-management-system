@@ -1,0 +1,28 @@
+
+    <%@page import="Project1.ConnectionProvider"%>
+    <%@page import="java.sql.* "%>
+
+     <% 
+      String supplierID=request.getParameter("supplierID");
+      String supplierName=request.getParameter("supplierName");
+      String supplierLocation=request.getParameter("supplierLocation");
+      String supplierContact=request.getParameter("supplierContact");
+      String supplierPart=request.getParameter("supplierPart");
+      try
+      {
+    	  Connection con=ConnectionProvider.getCon();
+    	  PreparedStatement ps=con.prepareStatement("insert into supplier values (?,?,?,?,?)");
+    	  ps.setString(1,supplierID);
+    	  ps.setString(2,supplierName);
+    	  ps.setString(3,supplierLocation);
+    	  ps.setString(4,supplierContact);
+    	  ps.setString(5,supplierPart);
+    	  ps.executeUpdate();
+    	  response.sendRedirect("addNewsupplier.jsp?msg=valid");
+      }
+      catch(Exception e)
+      {
+    	  response.sendRedirect("addNewsupplier.jsp?msg=invalid");
+      }
+      %>
+     
